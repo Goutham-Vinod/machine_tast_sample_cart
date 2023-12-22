@@ -3,9 +3,7 @@ import 'package:test_project1/core/dummy_products.dart';
 import 'package:test_project1/domain/product_model.dart';
 
 class HiveCartDB {
-// Products which are already added to cart
   Map<String, int> _cartProducts = {};
-  Map<String, int> get cartProducts => _cartProducts;
 
   increaseProductCount(String productId) async {
     final hiveBox = await Hive.openBox<int>('cart_db');
@@ -29,11 +27,12 @@ class HiveCartDB {
   }
 
 // Reads all the productIds from storage and add to cartProducts (Using DummyData)
-  readAllProductsCount() async {
+ Future< Map<String,int>> readAllProductsCount() async {
     final hiveBox = await Hive.openBox<int>('cart_db');
     hiveBox.keys.forEach((key) {
       _cartProducts[key] = hiveBox.get(key) ?? 0;
     });
+    return _cartProducts;
   }
 
 // to read the count of a specific product
@@ -51,7 +50,7 @@ class HiveCartDB {
     List<ProductModel> products = [];
 
     for (int i = 0; i < DummyData.products.length; i++) {
-      if (cartProducts.containsKey(DummyData.products[i].id)) {
+      if (_cartProducts.containsKey(DummyData.products[i].id)) {
         products.add(DummyData.products[i]);
       }
     }
