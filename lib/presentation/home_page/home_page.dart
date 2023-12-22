@@ -40,7 +40,9 @@ class _HomePageState extends State<HomePage> {
                 ),
                 itemBuilder: (context, index) {
                   return CustomCard(
-                    product: DummyData.products[index],
+                   productId: DummyData.products[index].id,
+                   productImage: DummyData.products[index].image,
+                   productName: DummyData.products[index].productName,
                   );
                 },
               ),

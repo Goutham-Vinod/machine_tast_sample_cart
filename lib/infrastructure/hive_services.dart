@@ -1,15 +1,15 @@
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:test_project1/core/dummy_products.dart';
 import 'package:test_project1/domain/product_model.dart';
 
 class HiveCartDB {
-  Map<String, int> _cartProducts = {};
+  final Map<String, int> _cartProducts = {};
 
   increaseProductCount(String productId) async {
     final hiveBox = await Hive.openBox<int>('cart_db');
     int currentCount = _cartProducts[productId] ?? 0;
     currentCount++;
-    await hiveBox.put(productId, currentCount);
+    // await hiveBox.put(productId, currentCount);
     _cartProducts[productId] = currentCount;
   }
 
@@ -18,7 +18,7 @@ class HiveCartDB {
     int currentCount = _cartProducts[productId] ?? 0;
     if (currentCount > 0) {
       currentCount--;
-      await hiveBox.put(productId, currentCount);
+      // await hiveBox.put(productId, currentCount);
       _cartProducts[productId] = currentCount;
     }
     if (currentCount == 0) {
@@ -27,11 +27,11 @@ class HiveCartDB {
   }
 
 // Reads all the productIds from storage and add to cartProducts (Using DummyData)
- Future< Map<String,int>> readAllProductsCount() async {
+  Future<Map<String, int>> readAllProductsCount() async {
     final hiveBox = await Hive.openBox<int>('cart_db');
-    hiveBox.keys.forEach((key) {
-      _cartProducts[key] = hiveBox.get(key) ?? 0;
-    });
+    // hiveBox.keys.forEach((key) {
+    //   _cartProducts[key] = hiveBox.get(key) ?? 0;
+    // });
     return _cartProducts;
   }
 
@@ -46,11 +46,12 @@ class HiveCartDB {
     return count;
   }
 
-  List<ProductModel> getProductDetailsFromCart() {
+  List<ProductModel> getProductDetails(
+      {required Map<String, int> cartProductIdsNCount}) {
     List<ProductModel> products = [];
 
     for (int i = 0; i < DummyData.products.length; i++) {
-      if (_cartProducts.containsKey(DummyData.products[i].id)) {
+      if (cartProductIdsNCount.containsKey(DummyData.products[i].id)) {
         products.add(DummyData.products[i]);
       }
     }
@@ -58,13 +59,13 @@ class HiveCartDB {
   }
 
   deleteProductFromCart(String productId) async {
-    final hiveBox = await Hive.openBox<Map<String, int>>('cart_db');
+    final hiveBox = await Hive.openBox<int>('cart_db');
     hiveBox.delete(productId);
     _cartProducts.remove(productId);
   }
 
   deleteAllProductsFromCart() async {
-    final hiveBox = await Hive.openBox<Map<String, int>>('cart_db');
+    final hiveBox = await Hive.openBox<int>('cart_db');
     hiveBox.clear();
     _cartProducts.clear();
   }

@@ -1,21 +1,23 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:test_project1/applications/bloc/counter_bloc.dart';
+
 import 'package:test_project1/domain/product_model.dart';
 
 class QuantityWidget extends StatelessWidget {
   const QuantityWidget({
-    super.key,
-    this.alignment,
-    required this.product,
-  });
+    Key? key,
+    required this.productId,
+  }) : super(key: key);
 
-  final MainAxisAlignment? alignment;
-  final ProductModel product;
+  final String productId;
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: alignment ?? MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text(
           'Qty:',
@@ -24,7 +26,10 @@ class QuantityWidget extends StatelessWidget {
         // call decrease count event
         IconButton(
             iconSize: 20,
-            onPressed: () {},
+            onPressed: () {
+              BlocProvider.of<CounterBloc>(context)
+                  .add(CounterEvent.decreaseProductCount(productId: productId));
+            },
             icon: Container(
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.black),
@@ -32,15 +37,25 @@ class QuantityWidget extends StatelessWidget {
                 child: const Icon(
                   Icons.remove,
                 ))),
-                // bloc builder here
-        const Text(
-          '11',
-          style: TextStyle(fontWeight: FontWeight.bold),
+        // bloc builder here
+        BlocBuilder<CounterBloc, CounterState>(
+          builder: (context, state) {
+            int count = state.productCount[productId] ?? 0;
+
+            return Text(
+              count.toString(),
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            );
+          },
         ),
         // call increase count event
         IconButton(
             iconSize: 20,
-            onPressed: () async {},
+            onPressed: () async {
+              print('increase count called');
+              BlocProvider.of<CounterBloc>(context)
+                  .add(CounterEvent.increaseProductCount(productId: productId));
+            },
             icon: Container(
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.black),

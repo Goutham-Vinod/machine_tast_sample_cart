@@ -19,22 +19,22 @@ mixin _$CounterEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initializeProductCount,
-    required TResult Function() increaseProductCount,
-    required TResult Function() decreaseProductCount,
+    required TResult Function(String productId) increaseProductCount,
+    required TResult Function(String productId) decreaseProductCount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initializeProductCount,
-    TResult? Function()? increaseProductCount,
-    TResult? Function()? decreaseProductCount,
+    TResult? Function(String productId)? increaseProductCount,
+    TResult? Function(String productId)? decreaseProductCount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initializeProductCount,
-    TResult Function()? increaseProductCount,
-    TResult Function()? decreaseProductCount,
+    TResult Function(String productId)? increaseProductCount,
+    TResult Function(String productId)? decreaseProductCount,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -123,8 +123,8 @@ class _$InitializeProductCountImpl implements _InitializeProductCount {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initializeProductCount,
-    required TResult Function() increaseProductCount,
-    required TResult Function() decreaseProductCount,
+    required TResult Function(String productId) increaseProductCount,
+    required TResult Function(String productId) decreaseProductCount,
   }) {
     return initializeProductCount();
   }
@@ -133,8 +133,8 @@ class _$InitializeProductCountImpl implements _InitializeProductCount {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initializeProductCount,
-    TResult? Function()? increaseProductCount,
-    TResult? Function()? decreaseProductCount,
+    TResult? Function(String productId)? increaseProductCount,
+    TResult? Function(String productId)? decreaseProductCount,
   }) {
     return initializeProductCount?.call();
   }
@@ -143,8 +143,8 @@ class _$InitializeProductCountImpl implements _InitializeProductCount {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initializeProductCount,
-    TResult Function()? increaseProductCount,
-    TResult Function()? decreaseProductCount,
+    TResult Function(String productId)? increaseProductCount,
+    TResult Function(String productId)? decreaseProductCount,
     required TResult orElse(),
   }) {
     if (initializeProductCount != null) {
@@ -198,6 +198,8 @@ abstract class _$$IncreaseProductCountImplCopyWith<$Res> {
   factory _$$IncreaseProductCountImplCopyWith(_$IncreaseProductCountImpl value,
           $Res Function(_$IncreaseProductCountImpl) then) =
       __$$IncreaseProductCountImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String productId});
 }
 
 /// @nodoc
@@ -207,58 +209,84 @@ class __$$IncreaseProductCountImplCopyWithImpl<$Res>
   __$$IncreaseProductCountImplCopyWithImpl(_$IncreaseProductCountImpl _value,
       $Res Function(_$IncreaseProductCountImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? productId = null,
+  }) {
+    return _then(_$IncreaseProductCountImpl(
+      productId: null == productId
+          ? _value.productId
+          : productId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$IncreaseProductCountImpl implements _IncreaseProductCount {
-  const _$IncreaseProductCountImpl();
+  const _$IncreaseProductCountImpl({required this.productId});
+
+  @override
+  final String productId;
 
   @override
   String toString() {
-    return 'CounterEvent.increaseProductCount()';
+    return 'CounterEvent.increaseProductCount(productId: $productId)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$IncreaseProductCountImpl);
+            other is _$IncreaseProductCountImpl &&
+            (identical(other.productId, productId) ||
+                other.productId == productId));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, productId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$IncreaseProductCountImplCopyWith<_$IncreaseProductCountImpl>
+      get copyWith =>
+          __$$IncreaseProductCountImplCopyWithImpl<_$IncreaseProductCountImpl>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initializeProductCount,
-    required TResult Function() increaseProductCount,
-    required TResult Function() decreaseProductCount,
+    required TResult Function(String productId) increaseProductCount,
+    required TResult Function(String productId) decreaseProductCount,
   }) {
-    return increaseProductCount();
+    return increaseProductCount(productId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initializeProductCount,
-    TResult? Function()? increaseProductCount,
-    TResult? Function()? decreaseProductCount,
+    TResult? Function(String productId)? increaseProductCount,
+    TResult? Function(String productId)? decreaseProductCount,
   }) {
-    return increaseProductCount?.call();
+    return increaseProductCount?.call(productId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initializeProductCount,
-    TResult Function()? increaseProductCount,
-    TResult Function()? decreaseProductCount,
+    TResult Function(String productId)? increaseProductCount,
+    TResult Function(String productId)? decreaseProductCount,
     required TResult orElse(),
   }) {
     if (increaseProductCount != null) {
-      return increaseProductCount();
+      return increaseProductCount(productId);
     }
     return orElse();
   }
@@ -300,7 +328,13 @@ class _$IncreaseProductCountImpl implements _IncreaseProductCount {
 }
 
 abstract class _IncreaseProductCount implements CounterEvent {
-  const factory _IncreaseProductCount() = _$IncreaseProductCountImpl;
+  const factory _IncreaseProductCount({required final String productId}) =
+      _$IncreaseProductCountImpl;
+
+  String get productId;
+  @JsonKey(ignore: true)
+  _$$IncreaseProductCountImplCopyWith<_$IncreaseProductCountImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -308,6 +342,8 @@ abstract class _$$DecreaseProductCountImplCopyWith<$Res> {
   factory _$$DecreaseProductCountImplCopyWith(_$DecreaseProductCountImpl value,
           $Res Function(_$DecreaseProductCountImpl) then) =
       __$$DecreaseProductCountImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String productId});
 }
 
 /// @nodoc
@@ -317,58 +353,84 @@ class __$$DecreaseProductCountImplCopyWithImpl<$Res>
   __$$DecreaseProductCountImplCopyWithImpl(_$DecreaseProductCountImpl _value,
       $Res Function(_$DecreaseProductCountImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? productId = null,
+  }) {
+    return _then(_$DecreaseProductCountImpl(
+      productId: null == productId
+          ? _value.productId
+          : productId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$DecreaseProductCountImpl implements _DecreaseProductCount {
-  const _$DecreaseProductCountImpl();
+  const _$DecreaseProductCountImpl({required this.productId});
+
+  @override
+  final String productId;
 
   @override
   String toString() {
-    return 'CounterEvent.decreaseProductCount()';
+    return 'CounterEvent.decreaseProductCount(productId: $productId)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$DecreaseProductCountImpl);
+            other is _$DecreaseProductCountImpl &&
+            (identical(other.productId, productId) ||
+                other.productId == productId));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, productId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$DecreaseProductCountImplCopyWith<_$DecreaseProductCountImpl>
+      get copyWith =>
+          __$$DecreaseProductCountImplCopyWithImpl<_$DecreaseProductCountImpl>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initializeProductCount,
-    required TResult Function() increaseProductCount,
-    required TResult Function() decreaseProductCount,
+    required TResult Function(String productId) increaseProductCount,
+    required TResult Function(String productId) decreaseProductCount,
   }) {
-    return decreaseProductCount();
+    return decreaseProductCount(productId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initializeProductCount,
-    TResult? Function()? increaseProductCount,
-    TResult? Function()? decreaseProductCount,
+    TResult? Function(String productId)? increaseProductCount,
+    TResult? Function(String productId)? decreaseProductCount,
   }) {
-    return decreaseProductCount?.call();
+    return decreaseProductCount?.call(productId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initializeProductCount,
-    TResult Function()? increaseProductCount,
-    TResult Function()? decreaseProductCount,
+    TResult Function(String productId)? increaseProductCount,
+    TResult Function(String productId)? decreaseProductCount,
     required TResult orElse(),
   }) {
     if (decreaseProductCount != null) {
-      return decreaseProductCount();
+      return decreaseProductCount(productId);
     }
     return orElse();
   }
@@ -410,25 +472,39 @@ class _$DecreaseProductCountImpl implements _DecreaseProductCount {
 }
 
 abstract class _DecreaseProductCount implements CounterEvent {
-  const factory _DecreaseProductCount() = _$DecreaseProductCountImpl;
+  const factory _DecreaseProductCount({required final String productId}) =
+      _$DecreaseProductCountImpl;
+
+  String get productId;
+  @JsonKey(ignore: true)
+  _$$DecreaseProductCountImplCopyWith<_$DecreaseProductCountImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 mixin _$CounterState {
-  Map<String, int> get cartProducts => throw _privateConstructorUsedError;
+  Map<String, int> get productCount => throw _privateConstructorUsedError;
+  List<ProductModel> get cartProductsDetails =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Map<String, int> cartProducts) initial,
+    required TResult Function(Map<String, int> productCount,
+            List<ProductModel> cartProductsDetails)
+        initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Map<String, int> cartProducts)? initial,
+    TResult? Function(Map<String, int> productCount,
+            List<ProductModel> cartProductsDetails)?
+        initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Map<String, int> cartProducts)? initial,
+    TResult Function(Map<String, int> productCount,
+            List<ProductModel> cartProductsDetails)?
+        initial,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -460,7 +536,8 @@ abstract class $CounterStateCopyWith<$Res> {
           CounterState value, $Res Function(CounterState) then) =
       _$CounterStateCopyWithImpl<$Res, CounterState>;
   @useResult
-  $Res call({Map<String, int> cartProducts});
+  $Res call(
+      {Map<String, int> productCount, List<ProductModel> cartProductsDetails});
 }
 
 /// @nodoc
@@ -476,13 +553,18 @@ class _$CounterStateCopyWithImpl<$Res, $Val extends CounterState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? cartProducts = null,
+    Object? productCount = null,
+    Object? cartProductsDetails = null,
   }) {
     return _then(_value.copyWith(
-      cartProducts: null == cartProducts
-          ? _value.cartProducts
-          : cartProducts // ignore: cast_nullable_to_non_nullable
+      productCount: null == productCount
+          ? _value.productCount
+          : productCount // ignore: cast_nullable_to_non_nullable
               as Map<String, int>,
+      cartProductsDetails: null == cartProductsDetails
+          ? _value.cartProductsDetails
+          : cartProductsDetails // ignore: cast_nullable_to_non_nullable
+              as List<ProductModel>,
     ) as $Val);
   }
 }
@@ -495,7 +577,8 @@ abstract class _$$InitialImplCopyWith<$Res>
       __$$InitialImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Map<String, int> cartProducts});
+  $Res call(
+      {Map<String, int> productCount, List<ProductModel> cartProductsDetails});
 }
 
 /// @nodoc
@@ -509,13 +592,18 @@ class __$$InitialImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? cartProducts = null,
+    Object? productCount = null,
+    Object? cartProductsDetails = null,
   }) {
     return _then(_$InitialImpl(
-      cartProducts: null == cartProducts
-          ? _value._cartProducts
-          : cartProducts // ignore: cast_nullable_to_non_nullable
+      productCount: null == productCount
+          ? _value._productCount
+          : productCount // ignore: cast_nullable_to_non_nullable
               as Map<String, int>,
+      cartProductsDetails: null == cartProductsDetails
+          ? _value._cartProductsDetails
+          : cartProductsDetails // ignore: cast_nullable_to_non_nullable
+              as List<ProductModel>,
     ));
   }
 }
@@ -523,20 +611,32 @@ class __$$InitialImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$InitialImpl implements _Initial {
-  const _$InitialImpl({required final Map<String, int> cartProducts})
-      : _cartProducts = cartProducts;
+  const _$InitialImpl(
+      {required final Map<String, int> productCount,
+      required final List<ProductModel> cartProductsDetails})
+      : _productCount = productCount,
+        _cartProductsDetails = cartProductsDetails;
 
-  final Map<String, int> _cartProducts;
+  final Map<String, int> _productCount;
   @override
-  Map<String, int> get cartProducts {
-    if (_cartProducts is EqualUnmodifiableMapView) return _cartProducts;
+  Map<String, int> get productCount {
+    if (_productCount is EqualUnmodifiableMapView) return _productCount;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_cartProducts);
+    return EqualUnmodifiableMapView(_productCount);
+  }
+
+  final List<ProductModel> _cartProductsDetails;
+  @override
+  List<ProductModel> get cartProductsDetails {
+    if (_cartProductsDetails is EqualUnmodifiableListView)
+      return _cartProductsDetails;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_cartProductsDetails);
   }
 
   @override
   String toString() {
-    return 'CounterState.initial(cartProducts: $cartProducts)';
+    return 'CounterState.initial(productCount: $productCount, cartProductsDetails: $cartProductsDetails)';
   }
 
   @override
@@ -545,12 +645,16 @@ class _$InitialImpl implements _Initial {
         (other.runtimeType == runtimeType &&
             other is _$InitialImpl &&
             const DeepCollectionEquality()
-                .equals(other._cartProducts, _cartProducts));
+                .equals(other._productCount, _productCount) &&
+            const DeepCollectionEquality()
+                .equals(other._cartProductsDetails, _cartProductsDetails));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_cartProducts));
+      runtimeType,
+      const DeepCollectionEquality().hash(_productCount),
+      const DeepCollectionEquality().hash(_cartProductsDetails));
 
   @JsonKey(ignore: true)
   @override
@@ -561,27 +665,33 @@ class _$InitialImpl implements _Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Map<String, int> cartProducts) initial,
+    required TResult Function(Map<String, int> productCount,
+            List<ProductModel> cartProductsDetails)
+        initial,
   }) {
-    return initial(cartProducts);
+    return initial(productCount, cartProductsDetails);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Map<String, int> cartProducts)? initial,
+    TResult? Function(Map<String, int> productCount,
+            List<ProductModel> cartProductsDetails)?
+        initial,
   }) {
-    return initial?.call(cartProducts);
+    return initial?.call(productCount, cartProductsDetails);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Map<String, int> cartProducts)? initial,
+    TResult Function(Map<String, int> productCount,
+            List<ProductModel> cartProductsDetails)?
+        initial,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(cartProducts);
+      return initial(productCount, cartProductsDetails);
     }
     return orElse();
   }
@@ -616,11 +726,14 @@ class _$InitialImpl implements _Initial {
 }
 
 abstract class _Initial implements CounterState {
-  const factory _Initial({required final Map<String, int> cartProducts}) =
-      _$InitialImpl;
+  const factory _Initial(
+      {required final Map<String, int> productCount,
+      required final List<ProductModel> cartProductsDetails}) = _$InitialImpl;
 
   @override
-  Map<String, int> get cartProducts;
+  Map<String, int> get productCount;
+  @override
+  List<ProductModel> get cartProductsDetails;
   @override
   @JsonKey(ignore: true)
   _$$InitialImplCopyWith<_$InitialImpl> get copyWith =>
