@@ -33,10 +33,12 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
 
       int count = productCount[productId] ?? 0;
 
-      count--;
-      productCount[productId] = count;
-      if (count == 0) {
-        productCount.remove(productId);
+      if (count > 0) {
+        count--;
+        productCount[productId] = count;
+        if (count == 0) {
+          productCount.remove(productId);
+        }
       }
 
       List<ProductModel> cartedproducts =
