@@ -1,10 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:test_project1/applications/bloc/counter_bloc.dart';
-
-import 'package:test_project1/domain/product_model.dart';
 
 class QuantityWidget extends StatelessWidget {
   const QuantityWidget({

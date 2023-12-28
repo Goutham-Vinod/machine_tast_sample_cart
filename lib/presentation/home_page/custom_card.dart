@@ -1,8 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
-import 'package:test_project1/core/dummy_products.dart';
-import 'package:test_project1/domain/product_model.dart';
 import 'package:test_project1/presentation/widgets/quantity_widget.dart';
 
 class CustomCard extends StatelessWidget {
@@ -23,43 +21,46 @@ class CustomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height ?? 100,
-      width: width ?? 100,
-      color: Colors.black45,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // ---------------------- Image  -------------------------------
-          Container(
-            height: 150,
-            width: 150,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage(
-                      productImage,
-                    ))),
-          ),
-          // -----------------------------------------------------------------------
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        height: height ?? 100,
+        width: width ?? 100,
+        color: Color.fromARGB(115, 68, 142, 212),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // ---------------------- Image  -------------------------------
+            Container(
+              height: 150,
+              width: 150,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage(
+                        productImage,
+                      ))),
+            ),
+            // -----------------------------------------------------------------------
 
-          const SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-          // ---------------------- Product Details  -------------------------------
-          SizedBox(
-            width: 150,
-            child: Text(
-              productName,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
+            // ---------------------- Product Details  -------------------------------
+            SizedBox(
+              width: 150,
+              child: Text(
+                productName,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          ),
-          // -----------------------------------------------------------------------
+            // -----------------------------------------------------------------------
 
-          QuantityWidget(productId: productId),
-        ],
+            QuantityWidget(productId: productId),
+          ],
+        ),
       ),
     );
   }
